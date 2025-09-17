@@ -65,11 +65,17 @@ const generateQuestions = async (topic, amount) => {
 };
 
 
-const getRandomQuestionsDB = async (amount, filter = {}) => {
-    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "filter:", filter);
+const getRandomQuestionsDB = async (amount, difficulty , filter = {}) => {
+    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "difficulty:", difficulty,  "filter:", filter);
 
     if (typeof amount !== "number" || isNaN(amount) || amount < 0) {
         throw new Error("Amount must be a positive number.");
+    }
+    if (difficulty) {
+        if (typeof difficulty !== "string" || !["easy", "medium", "hard"].includes(difficulty.toLowerCase())) {
+            throw new Error("Difficulty must be 'easy', 'medium', or 'hard'.");
+        }
+        filter.difficulty = difficulty.toLowerCase();
     }
    
     try {
@@ -78,14 +84,15 @@ const getRandomQuestionsDB = async (amount, filter = {}) => {
         const questions = await Questions.aggregate([
             { $match: matchCondition },
             { $sample: { size: amount } },
+        
         ]);
         
         return questions;
     } catch (error) {
-        throw new Error("Error fetching random questions from the database.");
+        console.error("Database error in getRandomQuestionsDB:", error);
+        throw new Error(`Error fetching random questions from the database: ${error.message}`);
     }
 };
-
 
 
 module.exports = {
