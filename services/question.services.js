@@ -66,7 +66,7 @@ const generateQuestions = async (topic, amount) => {
 
 
 const getRandomQuestionsDB = async (amount, difficulty , filter = {}) => {
-    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "difficulty:", difficulty,  "filter:", filter);
+    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount ? amount : "not provided", "difficulty:", difficulty ? difficulty : "not provided");
 
     if (typeof amount !== "number" || isNaN(amount) || amount < 0) {
         throw new Error("Amount must be a positive number.");

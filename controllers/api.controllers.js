@@ -25,7 +25,7 @@ const getRandomQuestions = async (req, res) => {
   try {
     let { amount, difficulty } = req.query;
     amount = parseInt(amount, 10);
-    difficulty = difficulty ? difficulty.toLowerCase() : null;
+    difficulty = difficulty ? difficulty.toLowerCase() : ''
     //validation of amount
     if (isNaN(amount) || amount < 1) {
       amount = 10;
