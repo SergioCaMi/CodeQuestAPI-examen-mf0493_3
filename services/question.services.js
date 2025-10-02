@@ -66,7 +66,6 @@ const generateQuestions = async (topic, amount) => {
 
 
 const getRandomQuestionsDB = async (amount, difficulty , filter = {}) => {
-    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount ? amount : "not provided", "difficulty:", difficulty ? difficulty : "not provided");
 
     if (typeof amount !== "number" || isNaN(amount) || amount < 0) {
         throw new Error("Amount must be a positive number.");
@@ -77,7 +76,7 @@ const getRandomQuestionsDB = async (amount, difficulty , filter = {}) => {
         }
         filter.difficulty = difficulty.toLowerCase();
     }
-   
+    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount ? amount : "not provided", "difficulty:", difficulty ? difficulty : "not provided", "filter:", filter);
     try {
         // Inicia con la condición de status y agrega cualquier otro filtro pasado como parámetro
         let matchCondition = { status: { $ne: 'pending' }, ...filter };
